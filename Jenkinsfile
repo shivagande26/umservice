@@ -2,9 +2,18 @@ pipeline {
   agent any
 
   stages {
-    stage("checkout") {
+    stage("Checkout") {
       steps {
         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/shivagande26/umservice.git']])
+      }
+    }
+    stage("Maven Build") {
+      steps {
+        sh """
+            echo "-------- Building Application --------"
+            mvn clean package
+            echo "------- Application Built Successfully --------"
+        """
       }
     }
   }
