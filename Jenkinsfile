@@ -51,7 +51,7 @@ pipeline {
       steps {
         sh """
           echo "-------- Scanning Docker Image --------"
-          trivy image umservice:"${App_Version}"
+          trivy image --skip-java-db-update umservice:"${App_Version}"
           echo "-------- Scanning Docker Image Complete --------"
         """
       }
