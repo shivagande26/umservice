@@ -47,12 +47,21 @@ pipeline {
         """
       }
     }
-    stage("docker image scan") {
-      steps {
+    // stage("docker image scan") {
+    //   steps {
+    //     sh """
+    //       echo "-------- Scanning Docker Image --------"
+    //       trivy image --cache-dir /test/.trivycache umservice:"${App_Version}"
+    //       echo "-------- Scanning Docker Image Complete --------"
+    //     """
+    //   }
+    // }
+    stage("Docker Image Tag") {
+      steps{
         sh """
-          echo "-------- Scanning Docker Image --------"
-          trivy image --cache-dir /test/.trivycache umservice:"${App_Version}"
-          echo "-------- Scanning Docker Image Complete --------"
+          echo "-------- Tagging Docker Image --------"
+          docker tag umservice:"${App_Version}" 8072388539/umservice:"${App_Version}"
+          echo "-------- Tagging Docker Image Completed."
         """
       }
     }
