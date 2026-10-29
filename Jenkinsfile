@@ -47,5 +47,14 @@ pipeline {
         """
       }
     }
+    stage("docker image scan") {
+      steps {
+        sh """
+          echo "-------- Scanning Docker Image --------"
+          trivy image umservice:"${App_Version}"
+          echo "-------- Scanning Docker Image Complete --------"
+        """
+      }
+    }
   }
 }
