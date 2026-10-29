@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  parameters {
+    string(name: "App_Version", description: "provide application version")
+  }
+
   stages {
     stage("Checkout") {
       steps {
@@ -31,6 +35,15 @@ pipeline {
           echo "-------- Pushing Artifacts To S3 --------"
           aws s3 cp ./target/*.jar s3://datastore-artefact-store-app-jenkins/
           echo "-------- Pushing Artifacts To S3 Completed --------"
+        """
+      }
+    }
+    stage("Docker Image Build") {
+      steps {
+        sh """
+          echo "-------- Building Docker Image --------"
+          docker build -t umservice:"${App_Version}" .
+          echo "-------- Image Successfully Built --------"
         """
       }
     }
