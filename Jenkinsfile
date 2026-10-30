@@ -96,5 +96,10 @@ pipeline {
         input 'Trigger Down Stream Job'
       }
     }
+    stage("Triggering Deployment Job") {
+      steps {
+        build job: "DevDeployment", parameters: [string(name: "App_Name", value: "userMgmtDeploy"), string(name: "App_Version", value: "${params.App_Version}")]
+      }
+    }
   }
 }
